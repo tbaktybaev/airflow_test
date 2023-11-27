@@ -1,8 +1,8 @@
 from airflow import DAG
-from datetime import timedelta, datetime
 from airflow.utils.dates import days_ago
-from airflow.operators.dummy_operator import DummyOperator
 from custom_operators import DownloadCurrencyOperator, DownloadTransactionLogsOperator, MergeDataOperator, LoadToSQLiteOperator
+# from airflow.operators.dummy_operator import DummyOperator
+# from datetime import timedelta, datetime
 
 # dag = DAG('dag', schedule_interval=timedelta(days=1), start_date=days_ago(1))
 # t1 = DummyOperator(task_id='task_1', dag=dag)
@@ -21,7 +21,10 @@ from custom_operators import DownloadCurrencyOperator, DownloadTransactionLogsOp
 # Задаем аргументы для DAG
 default_args = {
     'owner': 'candidate_for_position',
-    'start_date': datetime(2021, 1, 1),
+    # 'start_date': datetime(2021, 1, 1), # Настройка начальной даты
+    # Для получения актуальных данных можно назначить актуальную дату
+    'start_date': days_ago(1),
+    # и передавать его в аргументы Операторов
     'retries': 1,
 }
 
@@ -67,6 +70,6 @@ load_to_sqlite_task = LoadToSQLiteOperator(
 )
 
 # Прописываем порядок выполнения задач
-download_currency_task >> merge_data_task
+download_currency_task >> merge_data_task  # Обьединение идет после загрузки
 download_transaction_logs_task >> merge_data_task
-merge_data_task >> load_to_sqlite_task
+merge_data_task >> load_to_sqlite_task  # Загрузка идет после обьединения
