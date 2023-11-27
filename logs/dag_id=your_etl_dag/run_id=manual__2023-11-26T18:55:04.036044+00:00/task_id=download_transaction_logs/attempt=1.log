@@ -1,0 +1,30 @@
+[2023-11-26T18:55:06.611+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: your_etl_dag.download_transaction_logs manual__2023-11-26T18:55:04.036044+00:00 [queued]>
+[2023-11-26T18:55:06.617+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: your_etl_dag.download_transaction_logs manual__2023-11-26T18:55:04.036044+00:00 [queued]>
+[2023-11-26T18:55:06.618+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 2
+[2023-11-26T18:55:06.630+0000] {taskinstance.py:1380} INFO - Executing <Task(DownloadTransactionLogsOperator): download_transaction_logs> on 2023-11-26 18:55:04.036044+00:00
+[2023-11-26T18:55:06.635+0000] {standard_task_runner.py:57} INFO - Started process 225 to run task
+[2023-11-26T18:55:06.642+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'your_etl_dag', 'download_transaction_logs', 'manual__2023-11-26T18:55:04.036044+00:00', '--job-id', '27', '--raw', '--subdir', 'DAGS_FOLDER/dag.py', '--cfg-path', '/tmp/tmpw0ov_i25']
+[2023-11-26T18:55:06.645+0000] {standard_task_runner.py:85} INFO - Job 27: Subtask download_transaction_logs
+[2023-11-26T18:55:06.701+0000] {task_command.py:415} INFO - Running <TaskInstance: your_etl_dag.download_transaction_logs manual__2023-11-26T18:55:04.036044+00:00 [running]> on host 4df5b7bc60e8
+[2023-11-26T18:55:06.766+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='you' AIRFLOW_CTX_DAG_ID='your_etl_dag' AIRFLOW_CTX_TASK_ID='download_transaction_logs' AIRFLOW_CTX_EXECUTION_DATE='2023-11-26T18:55:04.036044+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-11-26T18:55:04.036044+00:00'
+[2023-11-26T18:55:07.106+0000] {taskinstance.py:1935} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/custom_operators.py", line 88, in execute
+    download_transaction_logs_to_csv()
+  File "/opt/airflow/dags/custom_operators.py", line 24, in download_transaction_logs_to_csv
+    transaction_logs_data.to_csv(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/generic.py", line 3772, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/formats/format.py", line 1186, in to_csv
+    csv_formatter.save()
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/formats/csvs.py", line 240, in save
+    with get_handle(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/common.py", line 737, in get_handle
+    check_parent_directory(str(handle))
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/io/common.py", line 600, in check_parent_directory
+    raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+OSError: Cannot save file into a non-existent directory: '/data'
+[2023-11-26T18:55:07.116+0000] {taskinstance.py:1398} INFO - Marking task as UP_FOR_RETRY. dag_id=your_etl_dag, task_id=download_transaction_logs, execution_date=20231126T185504, start_date=20231126T185506, end_date=20231126T185507
+[2023-11-26T18:55:07.122+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 27 for task download_transaction_logs (Cannot save file into a non-existent directory: '/data'; 225)
+[2023-11-26T18:55:07.138+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-11-26T18:55:07.155+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check
