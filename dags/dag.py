@@ -28,10 +28,10 @@ default_args = {
 # Инициализируем DAG
 dag = DAG(
     'get_transactions_dag',
-    default_args=default_args,
+    default_args=default_args,  # Передаем аргументы
     description='ETL DAG with CustomOperators',
-    # schedule_interval="0 0 * * *",
-    schedule_interval=None,
+    # schedule_interval="0 0 * * *", # Настройка интервала
+    schedule_interval=None,  # Пока установлен None чтобы он не запускался 900+ раз
 )
 
 # Определяем аргументы, которые нужно передать в операторы
